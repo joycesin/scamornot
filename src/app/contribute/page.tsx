@@ -3,13 +3,39 @@ import { useState } from "react";
 import "../styles/contribute.css";
 import { Button, Text } from "@mantine/core";
 
+import addData from "@/firebase/firestore/addData";
+
+const handleForm = async (formData: {
+  date: string;
+  message: string;
+  category: string;
+  platform: string;
+}) => {
+  console.log("handleform");
+  // log formdata
+  // const data = {
+  //   date: "01.01.2023",
+  //   message: "test scam message",
+  //   category: "Phishing",
+  //   platform: "SMS",
+  // };
+  const { result, error } = await addData("messages", formData);
+
+  if (error) {
+    console.log(error);
+    return console.log(error);
+  }
+  console.log("result: " + result);
+  return result;
+};
+
 export default function Contribute() {
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
   const [category, setCategory] = useState("");
   const [platform, setPlatform] = useState("");
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     const formData = {
@@ -19,8 +45,9 @@ export default function Contribute() {
       platform,
     };
 
-    // Here you would usually send the data to a server
-    console.log(formData);
+    // Send data to Firebase
+    console.log("formdata: ", formData);
+    handleForm(formData);
   };
 
   return (
@@ -78,10 +105,10 @@ export default function Contribute() {
             onChange={(e) => setPlatform(e.target.value)}
           >
             <option value="SMS">SMS</option>
-            <option value="SMS">WhatsApp</option>
-            <option value="SMS">Telegram</option>
-            <option value="SMS">WeChat</option>
-            <option value="SMS">Facebook</option>
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="Telegram">Telegram</option>
+            <option value="WeChat">WeChat</option>
+            <option value="Facebook">Facebook</option>
             {/* Add more platforms as options here */}
           </select>
         </div>

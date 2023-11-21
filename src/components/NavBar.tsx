@@ -146,10 +146,6 @@ function NavBar({ links }: HeaderResponsiveProps) {
             }}
           >
             <Text
-              style={
-                // make it centre aligned
-                { textAlign: "center" }
-              }
               className="font-extrabold cursor-pointer"
               variant="gradient"
             >
