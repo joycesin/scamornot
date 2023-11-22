@@ -9,7 +9,7 @@ export default async function LoadMessages() {
   // ScamItem component
   type ScamItemProps = {
     id: string;
-    date: Date;
+    date: string;
     message: string;
     category: string;
     platform: string;
