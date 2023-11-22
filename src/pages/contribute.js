@@ -2,7 +2,7 @@
 import { useState } from "react";
 import "./contribute.css";
 import { Button, Text } from "@mantine/core";
-
+import { useRouter } from "next/router";
 import addData from "@/firebase/firestore/addData";
 
 const handleForm = async (formData) => {
@@ -20,22 +20,54 @@ const handleForm = async (formData) => {
 
   if (error) {
     console.log(error);
+    alert(
+      "There was an issue submitting your scam message, please try again later."
+    );
     return console.log(error);
   }
   console.log("result: " + result);
+
   return result;
 };
 
 export default function Contribute() {
-  const [date, setDate] = useState("");
+  const router = useRouter();
+  const [id, setId] = useState("");
   const [message, setMessage] = useState("");
   const [category, setCategory] = useState("");
   const [platform, setPlatform] = useState("");
 
+  // use state of current date for date
+  const now = new Date();
+  const formattedDate = now.toISOString().slice(0, 10); // Extracts date part in YYYY-MM-DD format
+  // Initialize state with the formatted current date
+  const [date, setDate] = useState(formattedDate);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Check if all fields are selected
+    if (id === "") {
+      alert(
+        "Please enter the scammer's mobile phone or username before submitting the form."
+      );
+      return;
+    }
+    if (message === "") {
+      alert("Please enter the scam message before submitting the form.");
+      return;
+    }
+    if (category === "") {
+      alert("Please select a platform before submitting the form.");
+      return;
+    }
+    if (platform === "") {
+      alert("Please select a platform before submitting the form.");
+      return;
+    }
+
     const formData = {
+      id,
       date,
       message,
       category,
@@ -44,7 +76,15 @@ export default function Contribute() {
 
     // Send data to Firebase
     console.log("formdata: ", formData);
-    handleForm(formData);
+    // Initialize the router
+
+    try {
+      const result = await handleForm(formData);
+      console.log("result: ", result);
+      router.push("/");
+    } catch {
+      console.log("error");
+    }
   };
 
   return (
@@ -62,13 +102,13 @@ export default function Contribute() {
       {/* <br>Share your scam messages to raise awareness for scams!</br> */}
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="date">Date</label>
+          <label htmlFor="id">Scammer Mobile Number / Username</label>
           <input
-            id="date"
+            id="id"
             type="text"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            placeholder="DD.MM.YYYY"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+            placeholder="9xxxxxxx / scammer123"
           />
         </div>
         <div>
@@ -86,6 +126,7 @@ export default function Contribute() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
+            <option value="">Select a category</option>
             <option value="Phishing">Phishing</option>
             <option value="Malware">Malware</option>
             <option value="Investment">Investment</option>
@@ -101,6 +142,7 @@ export default function Contribute() {
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
           >
+            <option value="">Select a platform</option>
             <option value="SMS">SMS</option>
             <option value="WhatsApp">WhatsApp</option>
             <option value="Telegram">Telegram</option>
@@ -122,8 +164,8 @@ export default function Contribute() {
             className="font-extrabold cursor-pointer"
             variant="gradient"
             type="submit"
-            // align it right
-            //   style={{ float: "right" }}
+            // padding
+            style={{ margin: "10px" }}
           >
             Submit
           </Button>

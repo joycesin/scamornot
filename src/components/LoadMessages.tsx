@@ -8,7 +8,8 @@ import getData from "@/firebase/firestore/getData";
 export default async function LoadMessages() {
   // ScamItem component
   type ScamItemProps = {
-    date: string;
+    id: string;
+    date: Date;
     message: string;
     category: string;
     platform: string;
@@ -16,6 +17,7 @@ export default async function LoadMessages() {
   };
 
   const ScamItem = ({
+    id,
     date,
     message,
     category,
@@ -23,6 +25,7 @@ export default async function LoadMessages() {
     submissions,
   }: ScamItemProps) => (
     <div className="scam-item">
+      <div className="id">{id}</div>
       <div className="date">{date}</div>
       <div className="message">{message}</div>
       <div className="category">{category}</div>

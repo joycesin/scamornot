@@ -12,36 +12,32 @@ a {
 }
 
 .header {
-  display: flex;
-  justify-content: left;
-  align-items: start;
-  flex-direction: column;
   background-color: #f5f5f5;
-  padding: 20px;
+  padding: 20px 0;
   text-align: center;
   border-bottom: 1px solid #ccc;
 }
 
-.header h1 {
-  color: black;
+.header h1,
+.header .subtitle,
+.header .scam-count,
+.navigation a {
+  color: #333;
+  margin: 5px 0;
 }
 
-.subtitle {
-  color: black;
-  font-size: 40px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+.scam-item .highlight {
+  background-color: yellow; /* or any highlight color you prefer */
 }
 
-.scam-count {
-  color: #555;
+.navigation {
+  margin-top: 10px;
 }
 
 .navigation a {
-  color: #007bff;
   text-decoration: none;
+  color: #007bff;
   margin: 0 10px;
-  font-weight: bold;
 }
 
 .navigation a:hover {
@@ -49,40 +45,130 @@ a {
 }
 
 .scam-list {
-  padding: 20px;
+  max-width: 800px;
+  margin: 40px auto;
 }
 
 .scam-item {
+  display: flex;
+  align-items: center;
   background-color: #fff;
   border: 1px solid #ddd;
-  padding: 15px;
   margin-bottom: 10px;
+  position: relative;
 }
+
+.scam-item .id-container {
+  flex-shrink: 0;
+  flex-basis: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #ddd;
+}
+
+.scam-item .id {
+  min-width: 90px; /* Ensure there's enough space for the "id" */
+  flex-grow: 1; /* Allows the ID field to grow */
+  flex-shrink: 0; /* Prevents the ID field from shrinking */
+  font-weight: normal;
+  color: #555;
+  padding: 10px;
+  text-align: left;
+}
+
+.scam-item .content-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.scam-item .message-box {
+  background-color: #e7f3fe;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  flex-grow: 1;
+  position: relative;
+}
+
+/* .scam-item .message-box::before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -10px;
+  top: 10px;
+  border: 5px solid transparent;
+  border-right-color: #e7f3fe;
+} */
 
 .scam-item .date {
-  font-size: 0.9em;
-  color: #aaa;
-  margin-bottom: 5px;
+  align-self: flex-end;
+  text-align: right;
+  font-size: 0.8em;
+  color: #555;
 }
 
-.scam-item .message {
-  color: #333;
-  font-weight: bold;
-  margin-bottom: 5px;
+.scam-item .details {
+  display: flex;
+  flex-direction: column; /* Stack the details vertically */
+  align-items: flex-start;
+  margin-left: auto;
+  padding: 10px;
 }
 
 .scam-item .category,
 .scam-item .platform,
 .scam-item .submissions {
-  display: inline-block;
-  background-color: #eee;
+  background-color: #f1f1f1;
+  border-radius: 3px;
   padding: 5px 10px;
-  margin-right: 5px;
+  margin: 5px;
   font-size: 0.8em;
-  border-radius: 5px;
 }
 
-.scam-item .submissions {
-  float: right;
-  background-color: #d9edf7;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scam-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .scam-item .id {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    text-align: left;
+  }
+
+  .scam-item .message-box::before {
+    left: 10px;
+    top: -10px;
+    border: 5px solid transparent;
+    border-bottom-color: #e7f3fe;
+  }
+
+  .scam-item .details {
+    justify-content: center;
+    padding: 10px;
+  }
+}
+
+.sort-options {
+  padding: 10px;
+  text-align: center;
+}
+
+.sort-options button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.sort-options button:hover {
+  background-color: #e8e8e8;
 }
