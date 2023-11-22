@@ -1,16 +1,13 @@
 "use client";
 import { useState } from "react";
-import "../styles/contribute.css";
+import "./contribute.css";
 import { Button, Text } from "@mantine/core";
 
 import addData from "@/firebase/firestore/addData";
 
-const handleForm = async (formData: {
-  date: string;
-  message: string;
-  category: string;
-  platform: string;
-}) => {
+const handleForm = async (formData) => {
+  // Your code logic here
+
   console.log("handleform");
   // log formdata
   // const data = {
@@ -35,7 +32,7 @@ export default function Contribute() {
   const [category, setCategory] = useState("");
   const [platform, setPlatform] = useState("");
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = {

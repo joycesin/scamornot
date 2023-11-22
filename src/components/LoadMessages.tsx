@@ -1,5 +1,5 @@
 import React from "react";
-import "../app/page.css";
+import "../pages/page.css";
 import { Text } from "@mantine/core";
 import { collection, doc, getDocs } from "firebase/firestore";
 import getData from "@/firebase/firestore/getData";
@@ -31,23 +31,23 @@ export default async function LoadMessages() {
     </div>
   );
 
-  const populateData = async () => {
-    console.log("handleform");
+  console.log("handleform");
 
-    const { result, error } = await getData("messages");
+  const { result, error } = await getData("messages");
 
-    if (error) {
-      console.log(error);
-    }
-    console.log("result: ", result);
+  if (error) {
+    console.log(error);
+  }
+  console.log("result: ", result);
 
-    const itemsList = result.map((scam, index) => {
-      return <ScamItem key={index} {...scam} />;
-    });
-    return itemsList;
-  };
+  // const itemsList = result.map((scam, index) => {
+  //   return <ScamItem key={index} {...scam} />;
+  // });
+  // return itemsList;
 
-  // // Example data for scams
+  // return in JSON format for getServerSideProps
+  return JSON.stringify(result);
+
   //   const scams = [
   //     {
   //       date: "xx.xx.xxxx",
@@ -67,17 +67,4 @@ export default async function LoadMessages() {
   //     },
   //     // ... more scams
   //   ];
-
-  const newScams = await populateData();
-
-  return (
-    <div className="home">
-      <div className="scam-list">
-        {/* {scams.map((scam, index) => (
-          <ScamItem key={index} {...scam} />
-        ))} */}
-        {newScams}
-      </div>
-    </div>
-  );
 }

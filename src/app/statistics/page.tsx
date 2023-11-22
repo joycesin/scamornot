@@ -3,7 +3,7 @@ import { useState } from "react";
 import "../styles/contribute.css";
 import { Button, Text } from "@mantine/core";
 
-export default function Contribute() {
+export default function Statistics() {
   return (
     <div>
       <Text
