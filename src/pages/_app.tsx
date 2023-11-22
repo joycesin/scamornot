@@ -80,8 +80,9 @@ export default function App(props: AppProps) {
           content="Check The Scam - Is the message you just received a scam?"
         />
       </Head>
+
       <Script
-        src="https://www.googletagmanager.com/gtag/js?id=AW-11167200054"
+        src="https://www.googletagmanager.com/gtag/js?id=G-TP9K44ZC0S"
         strategy="afterInteractive"
       />
 
