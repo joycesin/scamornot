@@ -10,6 +10,8 @@ import getData from "@/firebase/firestore/getData";
 import LoadMessages from "../components/LoadMessages";
 import TableMui from "../components/TableMui";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import Paper from "@material-ui/core/Paper";
+// import SearchBar from "material-ui-search-bar";
 
 // Create a theme
 const theme = createTheme();
@@ -71,22 +73,22 @@ export default function Home({ data }) {
 
         <div className="details">
           <div
-            className={`category ${
-              activeSortField === "category" ? "highlight" : ""
+            className={`${
+              activeSortField === "category" ? "highlight" : "category"
             }`}
           >
             {category}
           </div>
           <div
-            className={`platform ${
-              activeSortField === "platform" ? "highlight" : ""
+            className={`${
+              activeSortField === "platform" ? "highlight" : "platform"
             }`}
           >
             {platform}
           </div>
           <div
-            className={`submissions ${
-              activeSortField === "submissions" ? "highlight" : ""
+            className={`${
+              activeSortField === "submissions" ? "highlight" : "submissions"
             }`}
           >
             {submissions} Submissions

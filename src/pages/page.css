@@ -27,7 +27,11 @@ a {
 }
 
 .scam-item .highlight {
-  background-color: yellow; /* or any highlight color you prefer */
+  background-color: #80addd; /* or any highlight color you prefer */
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 0.8em;
 }
 
 .navigation {
