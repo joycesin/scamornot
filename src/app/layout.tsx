@@ -30,10 +30,10 @@ export default function RootLayout({
               link: "/",
               label: "Home",
             },
-            {
-              link: "/statistics",
-              label: "Statistics",
-            },
+            // {
+            //   link: "/statistics",
+            //   label: "Statistics",
+            // },
             {
               link: "/contribute",
               label: "Contribute",

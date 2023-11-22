@@ -75,7 +75,7 @@ export default function Contribute() {
           />
         </div>
         <div>
-          <label htmlFor="message">Message</label>
+          <label htmlFor="message">Scam Message Received</label>
           <textarea
             id="message"
             value={message}

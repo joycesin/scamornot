@@ -41,3 +41,8 @@ const Home = () => {
 };
 
 export default Home;
+
+// TODO: category and platform disallow default value
+// make date datetime format from current time, don't require user to enter
+// mantine table for sorting
+// better phrasing/wording
