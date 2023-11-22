@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import "../styles/contribute.css";
 import { Button, Text } from "@mantine/core";
 
 export default function Statistics() {

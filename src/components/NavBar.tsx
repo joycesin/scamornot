@@ -104,13 +104,13 @@ interface HeaderResponsiveProps {
 
 function NavBar({ links }: HeaderResponsiveProps) {
   const [opened, { toggle, close }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
+  const [active, setActive] = useState(links[0].link ?? ""); // Provide a default value for active
   const { classes, cx } = useStyles();
   const router = useRouter();
   const currentPath = usePathname();
   useEffect(() => {
     if (active !== currentPath) {
-      setActive(currentPath);
+      setActive(currentPath ?? ""); // Provide a default value for currentPath
     }
   }, [currentPath]);
 
@@ -145,10 +145,7 @@ function NavBar({ links }: HeaderResponsiveProps) {
               textDecoration: "none",
             }}
           >
-            <Text
-              className="font-extrabold cursor-pointer"
-              variant="gradient"
-            >
+            <Text className="font-extrabold cursor-pointer" variant="gradient">
               Is This A Scam?
             </Text>
           </Link>

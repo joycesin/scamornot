@@ -52,6 +52,7 @@ export default function Home({ data }) {
   const itemsList = JSON.parse(data).map((scam, index) => {
     //console.log(scam, index);
     return <ScamItem key={index} {...scam} />;
+    // get the length of itemslist
   });
 
   return (
@@ -69,7 +70,7 @@ export default function Home({ data }) {
             Recognize Common Scams!
           </Text>
           <Text size="md" align={"center"}>
-            10,001 crowdsourced scam messages
+            {itemsList.length} crowdsourced scam messages
           </Text>
         </div>
       </div>
