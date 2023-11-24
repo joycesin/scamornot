@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { use } from "react";
 import { Suspense } from "react";
 import "./page.css";
-import { Text } from "@mantine/core";
+import { Badge, Input, Text } from "@mantine/core";
 import { Button } from "@mantine/core";
 import { collection, doc, getDocs } from "firebase/firestore";
 import getData from "@/firebase/firestore/getData";
@@ -60,8 +60,9 @@ export default function Home({ data }) {
     return (
       <div className="scam-item">
         <div className="id-container">
-          <div>Scammer:</div>
-          <div className="id">{id}</div>
+          <div className="id-text">
+            Scammer:<span className="id">{id}</span>
+          </div>
         </div>
 
         <div className="content-container">
@@ -72,27 +73,32 @@ export default function Home({ data }) {
         </div>
 
         <div className="details">
-          <div
+          <Badge
             className={`${
               activeSortField === "category" ? "highlight" : "category"
             }`}
+            gradient={{
+              from: "teal",
+              to: "cyan",
+              deg: 30,
+            }}
           >
             {category}
-          </div>
-          <div
+          </Badge>
+          <Badge
             className={`${
               activeSortField === "platform" ? "highlight" : "platform"
             }`}
           >
             {platform}
-          </div>
-          <div
+          </Badge>
+          <Badge
             className={`${
               activeSortField === "submissions" ? "highlight" : "submissions"
             }`}
           >
             {submissions} Submissions
-          </div>
+          </Badge>
         </div>
       </div>
     );
@@ -111,6 +117,8 @@ export default function Home({ data }) {
   const [sortKey, setSortKey] = useState("");
 
   const [activeSortField, setActiveSortField] = useState("");
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   // A function to sort scams based on the provided key
   const sortScams = (key) => {
@@ -132,7 +140,7 @@ export default function Home({ data }) {
   return (
     <div className="home">
       <Header />
-      <div>
+      <div className="content-wrapper">
         <div className="sort-options">
           {/* <Button onClick={() => sortScams("date")} variant="light">
             Sort by Date
@@ -147,11 +155,31 @@ export default function Home({ data }) {
             Sort by Submissions
           </Button>
         </div>
+        <Input
+          placeholder="Search for a scammer or scam message"
+          onChange={(event) => {
+            setSearchTerm(event.target.value);
+          }}
+        />
         <div className="scam-list">
-          {scams.map((scam, index) => (
+          {scams
+            .filter(
+              (scam) =>
+                scam.id.includes(searchTerm) ||
+                scam.message.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map((scam, index) => (
+              // <ScamItem key={index} {...scam} />
+              <ScamItem
+                key={index}
+                {...scam}
+                activeSortField={activeSortField}
+              />
+            ))}
+          {/* ).map((scam, index) => (
             // <ScamItem key={index} {...scam} />
             <ScamItem key={index} {...scam} activeSortField={activeSortField} />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

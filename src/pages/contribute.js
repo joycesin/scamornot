@@ -4,6 +4,7 @@ import "./contribute.css";
 import { Button, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import addData from "@/firebase/firestore/addData";
+import LoadMessages from "../components/LoadMessages";
 
 const handleForm = async (formData) => {
   // Your code logic here
@@ -76,6 +77,11 @@ export default function Contribute() {
 
     // Send data to Firebase
     console.log("formdata: ", formData);
+
+    // Get data from Firebase to check whether message already exists
+    // If message already exists, increment submissions by 1
+    // If message does not exist, add message to Firebase
+
     // Initialize the router
 
     try {
