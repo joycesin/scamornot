@@ -13,7 +13,11 @@ export default async function getData(collectionParam: string) {
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
-      result.push(doc.data()); // Pass the document ID as a string
+      result.push({
+        docId: doc.id,
+        ...doc.data(),
+        submissions: doc.data().submissions || 0,
+      });
     });
   } catch (e) {
     error = e;

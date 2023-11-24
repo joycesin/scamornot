@@ -5,6 +5,7 @@ import { Button, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import addData from "@/firebase/firestore/addData";
 import LoadMessages from "../components/LoadMessages";
+import updateData from "@/firebase/firestore/updateData";
 
 const handleForm = async (formData) => {
   // Your code logic here
@@ -43,6 +44,8 @@ export default function Contribute() {
   const formattedDate = now.toISOString().slice(0, 10); // Extracts date part in YYYY-MM-DD format
   // Initialize state with the formatted current date
   const [date, setDate] = useState(formattedDate);
+  // Initialize state with 0 submissions
+  const [submissions, setSubmissions] = useState(1);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -73,14 +76,47 @@ export default function Contribute() {
       message,
       category,
       platform,
+      submissions,
     };
 
-    // Send data to Firebase
+    // Get data from Firebase to check whether message already exists
+    // If message already exists, increment submissions by 1 in Firebase database
+    // If message does not exist, add message to Firebase
+
+    const data = await LoadMessages();
     console.log("formdata: ", formData);
 
-    // Get data from Firebase to check whether message already exists
-    // If message already exists, increment submissions by 1
-    // If message does not exist, add message to Firebase
+    // Format data
+    const scamsArray = JSON.parse(data);
+    for (const scam of scamsArray) {
+      console.log("flag 3", scam);
+      if (scam.message === message) {
+        // If message already exists, increment submissions by 1 in Firebase database
+        // don't add a new message
+        console.log("message already exists");
+        const newSubmissions = scam.submissions + 1;
+        const newFormData = {
+          ...formData,
+          submissions: newSubmissions,
+        };
+        console.log("newformdata: ", newFormData);
+        console.log("scam.docId: ", scam.docId);
+        const { result, error } = await updateData(
+          "messages",
+          newFormData,
+          scam.docId
+        );
+        if (error) {
+          console.log(error);
+          alert(
+            "There was an issue submitting your scam message, please try again later."
+          );
+          return console.log(error);
+        }
+        console.log("result: " + result);
+        return result;
+      }
+    }
 
     // Initialize the router
 

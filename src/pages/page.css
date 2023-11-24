@@ -110,7 +110,7 @@ a {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  min-width: 30px;
+  width: 80%;
 }
 
 .scam-item .message-box {
@@ -120,7 +120,6 @@ a {
   margin: 10px;
   flex-grow: 1;
   position: relative;
-  min-width: 30px;
 }
 
 /* .scam-item .message-box::before {
