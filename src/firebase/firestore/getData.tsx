@@ -16,7 +16,7 @@ export default async function getData(collectionParam: string) {
       result.push({
         docId: doc.id,
         ...doc.data(),
-        submissions: doc.data().submissions || 0,
+        submissions: doc.data().submissions || 1,
       });
     });
   } catch (e) {
