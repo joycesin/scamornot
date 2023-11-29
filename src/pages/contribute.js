@@ -8,16 +8,6 @@ import getData from "@/firebase/firestore/getData";
 import updateData from "@/firebase/firestore/updateData";
 
 const handleForm = async (formData) => {
-  // Your code logic here
-
-  console.log("handleform");
-  // log formdata
-  // const data = {
-  //   date: "01.01.2023",
-  //   message: "test scam message",
-  //   category: "Phishing",
-  //   platform: "SMS",
-  // };
   const { result, error } = await addData("messages", formData);
 
   if (error) {
@@ -82,8 +72,6 @@ export default function Contribute() {
     // Get data from Firebase to check whether message already exists
     // If message already exists, increment submissions by 1 in Firebase database
     // If message does not exist, add message to Firebase
-
-    //const data = await loadMessages();
 
     const { result, error } = await getData("messages");
 
@@ -155,7 +143,6 @@ export default function Contribute() {
       >
         Received a scam message? Submit it here to raise awareness for scams!
       </Text>
-      {/* <br>Share your scam messages to raise awareness for scams!</br> */}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="id">Scammer Mobile Number / Username</label>
@@ -207,13 +194,11 @@ export default function Contribute() {
             {/* Add more platforms as options here */}
           </select>
         </div>
-        {/* <button type="submit">Submit</button> */}
         <div
           style={{
             display: "flex",
             justifyContent: "end",
             alignItems: "center",
-            // height: "100vh",
           }}
         >
           <Button

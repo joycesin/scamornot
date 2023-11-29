@@ -56,7 +56,7 @@ export default function Home({ data }) {
     submissions,
     activeSortField,
   }) => {
-    console.log("scamitem activesortfield", activeSortField);
+    //console.log("scamitem activesortfield", activeSortField);
     return (
       <div className="scam-item">
         <div className="id-container">
@@ -104,10 +104,7 @@ export default function Home({ data }) {
     );
   };
 
-  //console.log("flag data", data);
   const scamsArray = JSON.parse(data);
-  //console.log("flag 2", scamsArray);
-  // Describe what itemsList is
   // It is an array of JSX elements
   // Each JSX element is a ScamItem component
   // Each ScamItem component will receive props from the parent component
@@ -122,8 +119,6 @@ export default function Home({ data }) {
   // useState takes in the initial value of the state variable as "scamsArray"
   const [scams, setScams] = useState(scamsArray);
 
-  const [sortKey, setSortKey] = useState("");
-
   const [activeSortField, setActiveSortField] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -132,7 +127,7 @@ export default function Home({ data }) {
   const sortScams = (key) => {
     setActiveSortField(key);
     console.log("activesortfield:", activeSortField);
-    setSortKey(key);
+
     setScams(
       scams.slice().sort((a, b) => {
         // For sorting numbers correctly
@@ -178,22 +173,14 @@ export default function Home({ data }) {
                 scam.message.toLowerCase().includes(searchTerm.toLowerCase())
             )
             .map((scam, index) => (
-              // <ScamItem key={index} {...scam} />
               <ScamItem
                 key={index}
                 {...scam}
                 activeSortField={activeSortField}
               />
             ))}
-          {/* ).map((scam, index) => (
-            // <ScamItem key={index} {...scam} />
-            <ScamItem key={index} {...scam} activeSortField={activeSortField} />
-          ))} */}
         </div>
       </div>
     </div>
   );
 }
-
-// enable search
-// better phrasing/wording

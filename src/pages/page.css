@@ -42,6 +42,7 @@ a {
 
 .scam-item .highlight {
   background-color: #80addd; /* or any highlight color you prefer */
+  color: #fff;
   border-radius: 3px;
   padding: 5px 10px;
   margin: 5px;
