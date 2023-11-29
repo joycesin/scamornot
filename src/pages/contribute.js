@@ -4,7 +4,7 @@ import "./contribute.css";
 import { Button, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import addData from "@/firebase/firestore/addData";
-import LoadMessages from "../components/LoadMessages";
+import getData from "@/firebase/firestore/getData";
 import updateData from "@/firebase/firestore/updateData";
 
 const handleForm = async (formData) => {
@@ -83,7 +83,18 @@ export default function Contribute() {
     // If message already exists, increment submissions by 1 in Firebase database
     // If message does not exist, add message to Firebase
 
-    const data = await LoadMessages();
+    //const data = await loadMessages();
+
+    const { result, error } = await getData("messages");
+
+    if (error) {
+      console.log(error);
+    }
+    console.log("result: ", result);
+
+    // return in JSON format for getServerSideProps
+    const data = JSON.stringify(result);
+
     console.log("formdata: ", formData);
 
     // Format data
@@ -114,7 +125,8 @@ export default function Contribute() {
           return console.log(error);
         }
         console.log("result: " + result);
-        return result;
+        router.push("/");
+        return;
       }
     }
 
@@ -123,6 +135,8 @@ export default function Contribute() {
     try {
       const result = await handleForm(formData);
       console.log("result: ", result);
+      console.log("route!");
+
       router.push("/");
     } catch {
       console.log("error");

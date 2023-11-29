@@ -1,26 +1,22 @@
 "use client";
 import React, { useState } from "react";
-import { use } from "react";
-import { Suspense } from "react";
 import "./page.css";
 import { Badge, Input, Text } from "@mantine/core";
 import { Button } from "@mantine/core";
-import { collection, doc, getDocs } from "firebase/firestore";
 import getData from "@/firebase/firestore/getData";
-import LoadMessages from "../components/LoadMessages";
-import TableMui from "../components/TableMui";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import Paper from "@material-ui/core/Paper";
-// import SearchBar from "material-ui-search-bar";
-
-// Create a theme
-const theme = createTheme();
 
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from Firebase API
+  const { result, error } = await getData("messages");
 
-  const data = await LoadMessages();
+  if (error) {
+    console.log(error);
+  }
+  console.log("result: ", result);
+
+  // convert to JSON format
+  const data = JSON.stringify(result);
 
   // Pass data to the page via props
   return { props: { data } };
@@ -47,6 +43,10 @@ export default function Home({ data }) {
     </div>
   );
 
+  // This component will be used to display each scam message in the list
+  // It will receive props from the parent component
+  // It will render the scam item based on the props it receives
+  // It will also highlight the field that is being sorted on based on the activeSortField prop
   const ScamItem = ({
     id,
     date,
@@ -104,14 +104,22 @@ export default function Home({ data }) {
     );
   };
 
-  console.log("flag data", data);
+  //console.log("flag data", data);
   const scamsArray = JSON.parse(data);
-  console.log("flag 2", scamsArray);
+  //console.log("flag 2", scamsArray);
+  // Describe what itemsList is
+  // It is an array of JSX elements
+  // Each JSX element is a ScamItem component
+  // Each ScamItem component will receive props from the parent component
+  // {...scam} is a spread operator, it spreads the scam object into individual props for the ScamItem component
   const itemsList = JSON.parse(data).map((scam, index) => {
     console.log(scam, index);
     return <ScamItem key={index} {...scam} />;
   });
 
+  // useState is a React hook that allows us to dynamically update the state of a component based on user interactions
+  // For example, "setScams" is a function that will update the order of the "scams" array when the user sorts it
+  // useState takes in the initial value of the state variable as "scamsArray"
   const [scams, setScams] = useState(scamsArray);
 
   const [sortKey, setSortKey] = useState("");
@@ -120,7 +128,7 @@ export default function Home({ data }) {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // A function to sort scams based on the provided key
+  // A function to sort scams based on the provided key that user clicks on
   const sortScams = (key) => {
     setActiveSortField(key);
     console.log("activesortfield:", activeSortField);
@@ -137,6 +145,7 @@ export default function Home({ data }) {
     );
   };
 
+  // Return the HTML and JSX elements to be rendered on the page
   return (
     <div className="home">
       <Header />
